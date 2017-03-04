@@ -1,0 +1,198 @@
+#! /bin/bash
+# mod: std
+# api: blib
+# txt: The `std` module contains a numer of standard functions usefull to
+#      progamming in bash.
+
+# fun: std::quit
+# api: blib
+# txt: perform an exit clean of the running program.
+std::quit () {
+  for handler in ${std__quit_handler[@]}; do
+    $handler
+  done
+}
+
+# fun: std::add_quit_handler <func_name>
+# api: blib
+# txt: Add func_name as handler to execute before quit the application.
+#      When the application finished, then the functions registered as quit
+#      handlers will be executed in the same order than they were
+#      registered.
+# opt: func_name: the name of the function to be registered.
+# use: somefunc () { echo "exiting"; }
+#      std::add_quit_handler somefunc
+declare -A std__quit_handler
+std__quit_handler["tmp"]="tmp::destroy"
+std::add_quit_handler () {
+  std__quit_handler["$1"]="$2"
+}
+trap std::quit EXIT
+trap std::quit CHLD
+
+# fun: std::hmac <text>
+# api: blib
+# txt: outputs the calculated HMAC using SHA1 for the text passed as
+#      argument.
+# opt: text: a plain text to be hashed.
+# env: ALGO: set the algorithm to use for calculate HMAC. Valid values are:
+#      sha1, md5, sha256, sha512. The proper helper tool must be installed
+#      on the system.
+# use: std::hmac "hello world"
+#      ALGO=md5 std::hmac "hello world"
+std::hmac () {
+  ALGO="${ALGO:=sha1}"
+  local sum=
+  local path="$(os::path ${ALGO}sum)"
+  if [ "$path" ]; then
+    sum="$(echo -n "$1" | ${ALGO}sum)"
+    read sum _ <<<"$sum"
+    echo "$sum"
+  else
+    err::trace "Required binary '${ALGO}sum' not found"
+  fi
+}
+
+# fun: std::mute <command>
+# api: blib
+# txt: mute outputs, including `stderr` when running a command, alias or
+#      function
+# opt: command: the command to run muted.
+std::mute () {
+  "$@" >/dev/null 2>/dev/null
+}
+
+# fun: std::strin <str1> <str2>
+# api: blib
+# txt: return true if `str1` is into `str2`, or false otherwise.
+# opt: str1: the string which could be contain `str2` and wants to evaluate
+# opt: str2: the string to find into `str1`
+# use: std::strin "somelargestring" "some"
+std::strin () {
+  [ "${1//$2/}" != "${1}" ]
+}
+
+# fun: std::sleep <seconds>
+# api: blib
+# txt: sleep for specified number of seconds. This function is pure-bash, so
+#      not need sleep(1) command.
+std::sleep () {
+  read -N 0 -t "$1" -s -r </dev/tty 3<&- 3<&0 <&3
+}
+
+# fun: std::func <func_name>
+# api: blib
+# txt: return true if function name passed as argument is defined, or false
+#      otherwise.
+std::func () {
+  std::mute declare -f "$1"
+}
+
+# fun: std::arch
+# api: blib
+# txt: outputs the hardware architecture of the current host.
+std::arch () {
+  uname -m
+}
+
+# fun: std::timestamp
+# api: blib
+# txt: outputs the UNIX timestamp
+# env: TZ: the timezone to use to print the timestamp, by default get the
+#      timezone from the system.
+std::timestamp () {
+  printf "%(%s)T\n"
+}
+
+# fun: std::parse <arg_string>
+# api: blib
+# txt: parse an argument string in the form key=value and promote this
+#      variables to environment. The key `name` is mandatory. If the
+#      first parameter has no key, key `name` is using by default.
+# use: std::parse "name=Jhon age=90"
+#      echo "$name has $age years old"
+std::parse () {
+  local hasname=false
+  local fst="$1"; shift
+
+  [ "${fst#name=}" != "${fst}" ] || fst="name=$fst"
+
+  for arg in "$fst" "$@"; do
+    std::strin "$arg" "=" || err::trace "Invalid argument: $arg"
+    [ "${arg#name=}" != "${arg}" ] && hasname=true
+    echo -n "local ${arg/=/=\'}';"
+  done
+  ${hasname} || err::trace "The parameter 'name' is mandatory"
+  shift
+  echo
+}
+
+# fun: std::run <command>
+# api: blib
+# txt: Run command passed as argument if $PRETEND is not set to true
+# env: PRETEND: if true do nothing.
+std::run () {
+  ${PRETEND:-false} || "$@"
+}
+
+# fun: std::installed <command>
+# api: blib
+# txt: return true if command is installed in path
+std::installed () {
+  std::mute type -p "$1"
+}
+
+# fun: std::is_dir_empty <dir>
+# api: blib
+# txt: return true if dir is empty
+std::is_dir_empty () {
+  for f in $1/*; do
+    [ "$f" == "$1/*" ] && return 0
+    return 1
+  done
+}
+
+# fun: std::sort <array>
+# api: blib
+# txt: sort an array using qsort in pure bash (not very efficient) and
+#      return the output to an special variable called `sort_ret`.
+# env: sort_ret: will contain the sorted array
+std::sort () {
+   local pivot i smaller=() larger=()
+   sort_ret=()
+   (($#==0)) && return 0
+   local pivot="$1"
+   shift
+   for i; do
+      if [[ "$i" < "$pivot" ]]; then
+         smaller+=( "$i" )
+      else
+         larger+=( "$i" )
+      fi
+   done
+   std::sort "${smaller[@]}"
+   smaller=( "${sort_ret[@]}" )
+   std::sort "${larger[@]}"
+   larger=( "${sort_ret[@]}" )
+   sort_ret=( "${smaller[@]}" "$pivot" "${larger[@]}" )
+}
+
+# fun: str2array <string> [separator]
+# api: blib
+# txt: create a new array with the contents of the string, using separator
+#      passed as argument.
+# opt: string: the string to covert to array
+# opt: separator: the character to use as separator, by default use comma.
+# use: str2array "one,two,three"
+#      echo "${str2array_ret[@]}"
+std::str2array () {
+  local str="$1"
+  local sep="${2:-,}"
+  # remove [] if present
+  str="${str#[}"
+  str="${str%]}"
+
+  eval set -- "${str//,/ }"
+  str2array_ret=( "$@" )
+}
+declare -a str2array_ret

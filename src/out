@@ -1,0 +1,52 @@
+#! /bin/bash
+# mod: out
+# api: blib
+# txt: The `out` module provides functions to output messages in stderr or
+#      stdout.
+
+# fun: out::log <message> [message_type]
+# api: blib
+# txt: print to stdout a log line with specified message and prefixed by
+#      date and message_type.
+# env: DATE_FORMAT: defines the format for the datetime, in regular date(1)
+#      format.
+# env: COLOR_DATE: defines the color to use (if available) to print the date.
+# env: COLOR_MESSAGE: defines the color to use to print the message.
+# env: COLOR_NONE: defines the sequence to reset defined color.
+# env: QUIET: if true do not show any messages
+DATE_FORMAT="%Y-%m-%d %H:%M:%S"
+out::log () {
+  ${QUIET:-false} ||
+  printf "${COLOR_DATE}%s${COLOR_NONE} %s: ${COLOR_MESSAGE}%s${COLOR_NONE}\n" \
+    "$(date +"$DATE_FORMAT")" \
+    "${2:-${COLOR_USER}user${COLOR_NONE}}" \
+    "$1"
+}
+
+# fun: out::info <message>
+# api: blib
+# txt: print an informational message in stdout.
+# env: COLOR_INFO: defines the color to be used in informational messages.
+out::info () { out::log "$1" "${COLOR_INFO}info${COLOR_NONE}"; }
+
+# fun: out::fail <message>
+# txt: print an informational message in stdout.
+# txt: print an error message in stderr.
+# env: COLOR_FAIL: defines the color to be used in this kind of messages.
+#      E: if set exit program with error code defined in the variable
+out::fail () {
+  out::log "$1" "${COLOR_FAIL}fail${COLOR_NONE}" >&2;
+  ${E:+exit $E}
+}
+
+# fun: out::warn <message>
+# txt: print an informational message in stdout.
+# txt: print a warning message in stderr.
+# env: COLOR_WARN: defines the color to be used in this kind of messages.
+out::warn () { out::log "$1" "${COLOR_WARN}warn${COLOR_NONE}" >&2; }
+
+# fun: out::user <message>
+# txt: print an informational message in stdout.
+# txt: print a user defined message in stdout
+# env: COLOR_USER: defines the color to be used in this kind of messages.
+out::user () { out::log "$1" "${COLOR_USER}user${COLOR_NONE}"; }

@@ -1,0 +1,30 @@
+#! /bin/bash
+# mod: term
+# api: blib
+# txt: The `term` module provides functions related with terminal
+#      configuration. This module also define some useful color variables to
+#      be used in `out` module.
+
+# fun: term::attached
+# api: blib
+# txt: return true if output is a terminal, false otherwise
+term::attached () { [ -t 1 ]; }
+
+# fun: term::tcap <capability>
+# api: blib
+# txt: check if some capabilty is enabled in terminal
+term::tcap () { tput "$1" 2>/dev/null; }
+
+if term::attached; then
+  case "$(term::tcap colors)" in
+    256)
+      COLOR_NONE=$'\033[0;0;0m'
+      COLOR_INFO=$'\033[38;5;79m'
+      COLOR_WARN=$'\033[38;5;190m'
+      COLOR_FAIL=$'\033[38;5;160m'
+      COLOR_DATE=$'\033[38;5;242m'
+      COLOR_USER=$'\033[38;5;201m'
+      COLOR_BOLD=$'\033[1;15m'
+      ;;
+  esac
+fi

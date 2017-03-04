@@ -1,0 +1,873 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="bashdoc" />
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,400italic|Work+Sans:300,400,500,600" rel="stylesheet" type="text/css"/>
+
+  <title></title>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+  </style>
+  <style>
+  * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      margin-top: 0;
+  }
+      html, div, body { margin:0; padding:0; }
+      #toc {
+        width: 25%;
+        margin:50px 0 0 0;
+        padding:0 2%;
+        float: left;
+        background: #3E4042;
+        color: #dadada;
+      }
+      body {
+      font-family: "Work sans", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      background: #3E4042;
+      }
+  
+      h1,h2,h3,h4,h5,h6 {
+        font-family: "Work sans","Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 500;
+      }
+  
+      #toc ul { padding:0; margin:0; }
+      #toc > ul > li { margin-bottom: 2em; }
+      #toc li { list-style: none; padding-left:0; }
+      #toc ul ul { padding-left: 1.25em; }
+      #toc code { display:none; }
+      #toc a {
+        color: #dadada;
+        text-decoration: none;
+      }
+      #toc a:hover {
+        color: #fff;
+      }
+      #content {
+        padding: 50px 5% 50px 5%;
+        margin:0 0 0 25%;
+        background: #fff;
+      }
+  
+      .section pre {
+        border-radius: 10px;
+        border:1px solid #dadada;
+        background: #ededed;
+        width:100%;
+        padding:5px;
+        font-family: monospace;
+        font-size:120%
+      }
+  
+      pre.sourceCode {
+        border-radius: 0;
+        border: 0;
+        background: none;
+        padding-top:10px;
+        width: 100%;
+        font-size: 90%;
+      }
+  
+      .module .section {
+        padding-left: 2em;
+      }
+  
+      .module .section p::first-letter {
+        text-transform: capitalize;
+      }
+  
+      .module h4 { margin-bottom:0 !important; }
+  
+      p { 
+        width: 80%;
+        text-align: justify;
+      }
+  
+      .module p {
+        padding-left: 1em;
+        color: #555;
+        font-style: italic;
+      }
+  
+    .module h2 { margin-bottom:0.2em; margin-top: 2.5em;}
+    .module h2:before {
+       content: "module";
+       color: #888;
+       font-family: monospace;
+       font-size: 90%;
+       padding-right:0.4em;
+    }
+  
+    .module h3:before {
+       content: "function";
+       color: #888;
+       font-family: monospace;
+       font-size: 90%;
+       padding-right:0.4em;
+    }
+  
+    .module dl {
+      padding: 0.5em;
+    }
+    .module dt {
+      display: inline-block;
+      min-width: 125px;
+      font-weight: bold;
+      color: #333;
+    }
+    .module dd:after {
+      display: block;
+      content: "";
+    }
+    .module dt:after {
+      content: ":";
+    }
+    .module dd {
+      display: inline;
+      margin: 0;
+    }
+    .module h3 code {
+      font-size: 80%;
+      color: #555;
+    }
+  
+    hr { margin-top:2em; margin-bottom: 2em; border:1px solid #555;
+    background: none; }
+    div.sourceCode { width: 100% !important; }
+    td.lineNumbers { padding-left:0 !important; }
+    .sourceCode pre { margin-bottom:0 !important; }
+    .sourceCode { margin-bottom: 0.5em !important; }
+  
+  
+  h1 code,h2 code,h3 code,h4 code,.section p code, dl code {
+    background: none !important;
+    color: #555 !important;
+  }
+  </style>
+<body class="book toc2 toc-left">
+<div id="toc" class="toc2">
+<ul>
+<li><a href="#blib-bash-basic-library">blib: Bash basic library</a><ul>
+<li><a href="#namespacing">Namespacing</a></li>
+<li><a href="#license">License</a></li>
+</ul></li>
+<li><a href="#api-reference-blib">API Reference (blib)</a><ul>
+<li><a href="#arg">arg</a><ul>
+<li><a href="#argopt-action-short-long-handler-help">arg::opt <code>&lt;action&gt;</code> <code>&lt;short&gt;</code> <code>&lt;long&gt;</code> <code>&lt;handler&gt;</code> <code class="function">[help]</code></a></li>
+<li><a href="#argaction-action-handler-help_message">arg::action <code>&lt;action&gt;</code> <code>&lt;handler&gt;</code> <code class="function">[help_message]</code></a></li>
+<li><a href="#argmainhelp-text">arg:::main::help <code class="function">&lt;text&gt;</code></a></li>
+<li><a href="#argmainaction-fun">arg:::main::action <code class="function">&lt;fun&gt;</code></a></li>
+<li><a href="#argusage">arg::usage</a></li>
+<li><a href="#argparse-arguments">arg::parse <code class="function">[arguments]</code></a></li>
+<li><a href="#argparam-action-parameter_name-help_str">arg::param <code>&lt;action&gt;</code> <code>&lt;parameter_name&gt;</code> <code class="function">[help_str]</code></a></li>
+</ul></li>
+<li><a href="#cache">cache</a><ul>
+<li><a href="#cacheget-key">cache::get <code class="function">&lt;key&gt;</code></a></li>
+<li><a href="#cacheput-key-value">cache::put <code>&lt;key&gt;</code> <code class="function">&lt;value&gt;</code></a></li>
+</ul></li>
+<li><a href="#config">config</a><ul>
+<li><a href="#configload-table-file">config::load <code>&lt;table&gt;</code> <code class="function">&lt;file&gt;</code></a></li>
+<li><a href="#configget-table-key-default">config::get <code>&lt;table&gt;</code> <code>&lt;key&gt;</code> <code class="function">[default]</code></a></li>
+<li><a href="#configiter-table-pattern">config::iter <code>&lt;table&gt;</code> <code class="function">&lt;pattern&gt;</code></a></li>
+</ul></li>
+<li><a href="#curl">curl</a><ul>
+<li><a href="#curlget-url">curl::get <code class="function">&lt;url&gt;</code></a></li>
+<li><a href="#curlsource-url">curl::source <code class="function">&lt;url&gt;</code></a></li>
+</ul></li>
+<li><a href="#err">err</a><ul>
+<li><a href="#errtrace">err::trace</a></li>
+</ul></li>
+<li><a href="#mutex">mutex</a><ul>
+<li><a href="#mutexadquire-name">mutex::adquire <code class="function">&lt;name&gt;</code></a></li>
+<li><a href="#mutexrelease-name">mutex::release <code class="function">&lt;name&gt;</code></a></li>
+<li><a href="#mutexrun-name-command-args">mutex::run <code>&lt;name&gt;</code> <code>&lt;command&gt;</code> <code class="function">[args]</code></a></li>
+</ul></li>
+<li><a href="#os">os</a><ul>
+<li><a href="#osfamily">os::family</a></li>
+<li><a href="#osprovider">os::provider</a></li>
+<li><a href="#osrelease">os::release</a></li>
+<li><a href="#ospath-file">os::path <code class="function">&lt;file&gt;</code></a></li>
+</ul></li>
+<li><a href="#out">out</a><ul>
+<li><a href="#outlog-message-message_type">out::log <code>&lt;message&gt;</code> <code class="function">[message_type]</code></a></li>
+<li><a href="#outinfo-message">out::info <code class="function">&lt;message&gt;</code></a></li>
+</ul></li>
+<li><a href="#std">std</a><ul>
+<li><a href="#stdquit">std::quit</a></li>
+<li><a href="#stdadd_quit_handler-func_name">std::add_quit_handler <code class="function">&lt;func_name&gt;</code></a></li>
+<li><a href="#stdhmac-text">std::hmac <code class="function">&lt;text&gt;</code></a></li>
+<li><a href="#stdmute-command">std::mute <code class="function">&lt;command&gt;</code></a></li>
+<li><a href="#stdstrin-str1-str2">std::strin <code>&lt;str1&gt;</code> <code class="function">&lt;str2&gt;</code></a></li>
+<li><a href="#stdsleep-seconds">std::sleep <code class="function">&lt;seconds&gt;</code></a></li>
+<li><a href="#stdfunc-func_name">std::func <code class="function">&lt;func_name&gt;</code></a></li>
+<li><a href="#stdarch">std::arch</a></li>
+<li><a href="#stdtimestamp">std::timestamp</a></li>
+<li><a href="#stdparse-arg_string">std::parse <code class="function">&lt;arg_string&gt;</code></a></li>
+<li><a href="#stdrun-command">std::run <code class="function">&lt;command&gt;</code></a></li>
+<li><a href="#stdinstalled-command">std::installed <code class="function">&lt;command&gt;</code></a></li>
+<li><a href="#stdis_dir_empty-dir">std::is_dir_empty <code class="function">&lt;dir&gt;</code></a></li>
+<li><a href="#stdsort-array">std::sort <code class="function">&lt;array&gt;</code></a></li>
+<li><a href="#str2array-string-separator">str2array <code>&lt;string&gt;</code> <code class="function">[separator]</code></a></li>
+</ul></li>
+<li><a href="#term">term</a><ul>
+<li><a href="#termattached">term::attached</a></li>
+<li><a href="#termtcap-capability">term::tcap <code class="function">&lt;capability&gt;</code></a></li>
+</ul></li>
+<li><a href="#tmp">tmp</a><ul>
+<li><a href="#tmpcreate-dirname">tmp::create <code class="function">&lt;dirname&gt;</code></a></li>
+<li><a href="#tmpexit">tmp::exit</a></li>
+<li><a href="#tmpdestroy">tmp::destroy</a></li>
+<li><a href="#tmpexists-name">tmp::exists <code class="function">&lt;name&gt;</code></a></li>
+<li><a href="#tmpfile">tmp::file</a></li>
+<li><a href="#tmptouch-name">tmp::touch <code class="function">&lt;name&gt;</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="content">
+<div id="blib-bash-basic-library" class="section level1">
+<h1>blib: Bash basic library</h1>
+<p>The blib library is a basic library contains a lot of useful functions and aliases for bash programing. The library is compiled in one file and it’s easy to source from any script. All functions are well documented and using specific namespace convention to keep blib easy to use.</p>
+<p>See the API Reference below for more information about utilities included in standard blib versions.</p>
+<div id="namespacing" class="section level2">
+<h2>Namespacing</h2>
+<p>In blib functions are organized in modules. Because of bash does not support namespaces natively, we need to use a convention to simulate them. In blib all functions are named in the following form:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">module</span>::function</code></pre></div>
+<p>Where <code>module</code> is the module name where the functions belongs, and the <code>function</code> is the function name. Blib is documented with bashdoc, using bashdoc document strings.</p>
+</div>
+<div id="license" class="section level2">
+<h2>License</h2>
+<p>Blib is distributed under the terms of MIT License.</p>
+<hr />
+</div>
+</div>
+<div id="api-reference-blib" class="section level1">
+<h1>API Reference (blib)</h1>
+<div id="arg" class="section level2 module">
+<h2>arg</h2>
+<p>The <code>arg</code> module provides a number of functions to parse arguments from command line. To use <code>arg</code> module you need to create handler functions which will be call during the parser process. The handler functions sould return the number of parameters comsumed from the parameter list. See example below for more information.</p>
+<div id="usage-example" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">opt_quiet ()</span> <span class="kw">{</span>
+    <span class="ot">QUIET=</span>true; <span class="kw">return</span> 1<span class="kw">;</span> <span class="co"># we consum only the -q param</span>
+<span class="kw">}</span>
+<span class="fu">create ()</span> <span class="kw">{</span> <span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">$arguments</span><span class="st">&quot;</span> <span class="kw">}</span>
+<span class="kw">arg</span>::opt MAIN -q --quiet   opt_quiet   <span class="st">&#39;do not output messages&#39;</span>
+<span class="kw">arg</span>::action create create <span class="st">&#39;create new things&#39;</span>
+<span class="kw">arg</span>::param create <span class="st">&quot;arguments+&quot;</span>  <span class="st">&#39;argument to create subcommand&#39;</span>
+<span class="kw">arg</span>::parse <span class="st">&quot;</span><span class="ot">$@</span><span class="st">&quot;</span></code></pre></div>
+</div>
+<div id="argopt-action-short-long-handler-help" class="section level3">
+<h3>arg::opt <code>&lt;action&gt;</code> <code>&lt;short&gt;</code> <code>&lt;long&gt;</code> <code>&lt;handler&gt;</code> <code class="function">[help]</code></h3>
+<p>set an option for a specific action argument.</p>
+<div id="parameters" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>action</code></dt>
+<dd>the action for which the option will be added
+</dd>
+<dt><code>short</code></dt>
+<dd>the short form of the option (usually prefixed by <code>-</code>)
+</dd>
+<dt><code>long</code></dt>
+<dd>the long form of the option (usually prefixed by <code>--</code>)
+</dd>
+<dt><code>handler</code></dt>
+<dd>function to handler when option is present.
+</dd>
+</dl>
+</div>
+</div>
+<div id="argaction-action-handler-help_message" class="section level3">
+<h3>arg::action <code>&lt;action&gt;</code> <code>&lt;handler&gt;</code> <code class="function">[help_message]</code></h3>
+<p>set a new action in argument parser.</p>
+<div id="parameters-1" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>action</code></dt>
+<dd>the action name to add to the parser
+</dd>
+<dt><code>handler</code></dt>
+<dd>the function name to use as handler for this action.
+</dd>
+<dt><code>help_message</code></dt>
+<dd>a message to print on usage.
+</dd>
+</dl>
+</div>
+</div>
+<div id="argmainhelp-text" class="section level3">
+<h3>arg:::main::help <code class="function">&lt;text&gt;</code></h3>
+<p>Set the main help for the program</p>
+<div id="parameters-2" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>text</code></dt>
+<dd>the main help string for the program
+</dd>
+</dl>
+</div>
+</div>
+<div id="argmainaction-fun" class="section level3">
+<h3>arg:::main::action <code class="function">&lt;fun&gt;</code></h3>
+<p>Set the function handler for main action, used when no action defined.</p>
+<div id="parameters-3" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>fun</code></dt>
+<dd>the handler for the MAIN action.
+</dd>
+</dl>
+</div>
+</div>
+<div id="argusage" class="section level3 function">
+<h3>arg::usage</h3>
+<p>print main usage information</p>
+<div id="environment-variables" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>E</code></dt>
+<dd>the error code to return to OS on exit.
+</dd>
+</dl>
+</div>
+</div>
+<div id="argparse-arguments" class="section level3">
+<h3>arg::parse <code class="function">[arguments]</code></h3>
+<p>parse arguments according with previous configured parser.</p>
+</div>
+<div id="argparam-action-parameter_name-help_str" class="section level3">
+<h3>arg::param <code>&lt;action&gt;</code> <code>&lt;parameter_name&gt;</code> <code class="function">[help_str]</code></h3>
+<p>add position parameter to parser.</p>
+<div id="parameters-4" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>action</code></dt>
+<dd>action where add the parameter
+</dd>
+<dt><code>parameter_name</code></dt>
+<dd>the name of the paramenter
+</dd>
+<dt><code>help_str</code></dt>
+<dd>a help string for the parameter to show in usage
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="cache" class="section level2 module">
+<h2>cache</h2>
+<p>The <code>cache</code> module provides a simple in-memory cache.</p>
+<div id="usage-example-1" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cache</span>::put <span class="st">&quot;key&quot;</span> <span class="st">&quot;val&quot;</span>
+<span class="kw">cache</span>::get <span class="st">&quot;key&quot;</span></code></pre></div>
+</div>
+<div id="cacheget-key" class="section level3">
+<h3>cache::get <code class="function">&lt;key&gt;</code></h3>
+<p>get the value of the key from the potion in-memory cache.</p>
+</div>
+<div id="cacheput-key-value" class="section level3">
+<h3>cache::put <code>&lt;key&gt;</code> <code class="function">&lt;value&gt;</code></h3>
+<p>save the content of the specified key to the in-memory cache.</p>
+</div>
+</div>
+<div id="config" class="section level2 module">
+<h2>config</h2>
+<p>The <code>config</code> module allows you to read configuration file in properties format</p>
+<div id="usage-example-2" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">config</span>::load configname ./config.properties
+<span class="kw">echo</span> <span class="ot">$(</span><span class="kw">config</span>::get configname key<span class="ot">)</span></code></pre></div>
+</div>
+<div id="configload-table-file" class="section level3">
+<h3>config::load <code>&lt;table&gt;</code> <code class="function">&lt;file&gt;</code></h3>
+<p>read a configuration file passed as argument and save in the memory with specific table name.</p>
+<div id="parameters-5" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>table</code></dt>
+<dd>a name to identify the config table where file will be load.
+</dd>
+<dt><code>file</code></dt>
+<dd>path to a properties file to load.
+</dd>
+</dl>
+</div>
+</div>
+<div id="configget-table-key-default" class="section level3">
+<h3>config::get <code>&lt;table&gt;</code> <code>&lt;key&gt;</code> <code class="function">[default]</code></h3>
+<p>outputs the specified configuration key in the table passed as argument. If key does not exists raise an error, unless default is passed as argument, in that case return default values.</p>
+<div id="parameters-6" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>table</code></dt>
+<dd>the table name where to search key.
+</dd>
+<dt><code>key</code></dt>
+<dd>the key to search in config table
+</dd>
+<dt><code>default</code></dt>
+<dd>default value to output if value is not found. By default an error is raised.
+</dd>
+</dl>
+</div>
+</div>
+<div id="configiter-table-pattern" class="section level3">
+<h3>config::iter <code>&lt;table&gt;</code> <code class="function">&lt;pattern&gt;</code></h3>
+<p>iterate over a specific configuration using pattern passed as argument and outputs keys with match.</p>
+<div id="parameters-7" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>table</code></dt>
+<dd>the table name to iterate
+</dd>
+<dt><code>pattern</code></dt>
+<dd>a glob pattern to match in config keys.
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="curl" class="section level2 module">
+<h2>curl</h2>
+<p>The curl module offers a way to access to HTTP resources easily.</p>
+<div id="curlget-url" class="section level3">
+<h3>curl::get <code class="function">&lt;url&gt;</code></h3>
+<p>get an object from url and output it to stdout</p>
+<div id="parameters-8" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>url</code></dt>
+<dd>any URL valid for curl.
+</dd>
+</dl>
+</div>
+<div id="usage-example-3" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span>::get http://example.com</code></pre></div>
+</div>
+</div>
+<div id="curlsource-url" class="section level3">
+<h3>curl::source <code class="function">&lt;url&gt;</code></h3>
+<p>sources a file from url</p>
+<div id="usage-example-4" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span>::source http://mydomain.com/file.bash</code></pre></div>
+</div>
+</div>
+</div>
+<div id="err" class="section level2 module">
+<h2>err</h2>
+<p>The <code>err</code> module offers a way to stop potion execution with a traceback.</p>
+<div id="errtrace" class="section level3 function">
+<h3>err::trace</h3>
+<p>print to stderr a traceback of an error.</p>
+<div id="usage-example-5" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">false</span> <span class="kw">||</span> <span class="kw">err</span>::trace <span class="st">&quot;Error because of false&quot;</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="mutex" class="section level2 module">
+<h2>mutex</h2>
+<p>The <code>mutex</code> module provides a way to ensure critical region access across different processes. NOTE this module does not work fine on some filesystems, like NFS, AFS and others.</p>
+<div id="usage-example-6" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mutex</span>::run mymutex sleep 10 <span class="co"># run a sleep in a critical region</span>
+<span class="kw">mutex</span>::adquire mymutex
+<span class="co"># do some critical changes</span>
+<span class="kw">mutex</span>::release mymutex</code></pre></div>
+</div>
+<div id="mutexadquire-name" class="section level3">
+<h3>mutex::adquire <code class="function">&lt;name&gt;</code></h3>
+<p>create a mutex or wait until mutex removed</p>
+<div id="parameters-9" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>name</code></dt>
+<dd>the name to identify this mutex
+</dd>
+</dl>
+</div>
+</div>
+<div id="mutexrelease-name" class="section level3">
+<h3>mutex::release <code class="function">&lt;name&gt;</code></h3>
+<p>release mutex by name</p>
+<div id="parameters-10" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>name</code></dt>
+<dd>the name to identify this mutex
+</dd>
+</dl>
+</div>
+</div>
+<div id="mutexrun-name-command-args" class="section level3">
+<h3>mutex::run <code>&lt;name&gt;</code> <code>&lt;command&gt;</code> <code class="function">[args]</code></h3>
+<p>run a command protected by mutex named as argument name.</p>
+<div id="parameters-11" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>name</code></dt>
+<dd>the name to identify this mutex
+</dd>
+<dt><code>command</code></dt>
+<dd>the command to run
+</dd>
+<dt><code>args</code></dt>
+<dd>optional arguments to the command.
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="os" class="section level2 module">
+<h2>os</h2>
+<p>The <code>os</code> module provides specified functions to guess the operating system related variables.</p>
+<div id="osfamily" class="section level3 function">
+<h3>os::family</h3>
+<p>print to stdout the operating system family</p>
+</div>
+<div id="osprovider" class="section level3 function">
+<h3>os::provider</h3>
+<p>print the operating system provider (formerly distribution).</p>
+</div>
+<div id="osrelease" class="section level3 function">
+<h3>os::release</h3>
+<p>print to stdout the properly release of operating system provider.</p>
+</div>
+<div id="ospath-file" class="section level3">
+<h3>os::path <code class="function">&lt;file&gt;</code></h3>
+<p>return the path of a file in PATH</p>
+<div id="parameters-12" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>file</code></dt>
+<dd>the file name to find the full path.
+</dd>
+</dl>
+</div>
+<div id="environment-variables-1" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>PATH</code></dt>
+<dd>contains the path to search file
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="out" class="section level2 module">
+<h2>out</h2>
+<p>The <code>out</code> module provides functions to output messages in stderr or stdout.</p>
+<div id="outlog-message-message_type" class="section level3">
+<h3>out::log <code>&lt;message&gt;</code> <code class="function">[message_type]</code></h3>
+<p>print to stdout a log line with specified message and prefixed by date and message_type.</p>
+<div id="environment-variables-2" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>DATE_FORMAT</code></dt>
+<dd>defines the format for the datetime, in regular date(1) format.
+</dd>
+<dt><code>COLOR_DATE</code></dt>
+<dd>defines the color to use (if available) to print the date.
+</dd>
+<dt><code>COLOR_MESSAGE</code></dt>
+<dd>defines the color to use to print the message.
+</dd>
+<dt><code>COLOR_NONE</code></dt>
+<dd>defines the sequence to reset defined color.
+</dd>
+<dt><code>QUIET</code></dt>
+<dd>if true do not show any messages
+</dd>
+</dl>
+</div>
+</div>
+<div id="outinfo-message" class="section level3">
+<h3>out::info <code class="function">&lt;message&gt;</code></h3>
+<p>print an informational message in stdout.</p>
+<div id="environment-variables-3" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>COLOR_INFO</code></dt>
+<dd>defines the color to be used in informational messages.
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="std" class="section level2 module">
+<h2>std</h2>
+<p>The <code>std</code> module contains a numer of standard functions usefull to progamming in bash.</p>
+<div id="environment-variables-4" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>BLIB_VERSION</code></dt>
+<dd>Contains the current blib version.
+</dd>
+</dl>
+</div>
+<div id="stdquit" class="section level3 function">
+<h3>std::quit</h3>
+<p>perform an exit clean of the running program.</p>
+</div>
+<div id="stdadd_quit_handler-func_name" class="section level3">
+<h3>std::add_quit_handler <code class="function">&lt;func_name&gt;</code></h3>
+<p>Add func_name as handler to execute before quit the application. When the application finished, then the functions registered as quit handlers will be executed in the same order than they were registered.</p>
+<div id="parameters-13" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>func_name</code></dt>
+<dd>the name of the function to be registered.
+</dd>
+</dl>
+</div>
+<div id="usage-example-7" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">somefunc ()</span> <span class="kw">{</span> <span class="kw">echo</span> <span class="st">&quot;exiting&quot;</span><span class="kw">;</span> <span class="kw">}</span>
+<span class="kw">std</span>::add_quit_handler somefunc</code></pre></div>
+</div>
+</div>
+<div id="stdhmac-text" class="section level3">
+<h3>std::hmac <code class="function">&lt;text&gt;</code></h3>
+<p>outputs the calculated HMAC using SHA1 for the text passed as argument.</p>
+<div id="parameters-14" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>text</code></dt>
+<dd>a plain text to be hashed.
+</dd>
+</dl>
+</div>
+<div id="environment-variables-5" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>ALGO</code></dt>
+<dd>set the algorithm to use for calculate HMAC. Valid values are: sha1, md5, sha256, sha512. The proper helper tool must be installed on the system.
+</dd>
+</dl>
+</div>
+<div id="usage-example-8" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">std</span>::hmac <span class="st">&quot;hello world&quot;</span>
+<span class="ot">ALGO=</span>md5 <span class="kw">std</span>::hmac <span class="st">&quot;hello world&quot;</span></code></pre></div>
+</div>
+</div>
+<div id="stdmute-command" class="section level3">
+<h3>std::mute <code class="function">&lt;command&gt;</code></h3>
+<p>mute outputs, including <code>stderr</code> when running a command, alias or function</p>
+<div id="parameters-15" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>command</code></dt>
+<dd>the command to run muted.
+</dd>
+</dl>
+</div>
+</div>
+<div id="stdstrin-str1-str2" class="section level3">
+<h3>std::strin <code>&lt;str1&gt;</code> <code class="function">&lt;str2&gt;</code></h3>
+<p>return true if <code>str1</code> is into <code>str2</code>, or false otherwise.</p>
+<div id="parameters-16" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>str1</code></dt>
+<dd>the string which could be contain <code>str2</code> and wants to evaluate
+</dd>
+<dt><code>str2</code></dt>
+<dd>the string to find into <code>str1</code>
+</dd>
+</dl>
+</div>
+<div id="usage-example-9" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">std</span>::strin <span class="st">&quot;somelargestring&quot;</span> <span class="st">&quot;some&quot;</span></code></pre></div>
+</div>
+</div>
+<div id="stdsleep-seconds" class="section level3">
+<h3>std::sleep <code class="function">&lt;seconds&gt;</code></h3>
+<p>sleep for specified number of seconds. This function is pure-bash, so not need sleep(1) command.</p>
+</div>
+<div id="stdfunc-func_name" class="section level3">
+<h3>std::func <code class="function">&lt;func_name&gt;</code></h3>
+<p>return true if function name passed as argument is defined, or false otherwise.</p>
+</div>
+<div id="stdarch" class="section level3 function">
+<h3>std::arch</h3>
+<p>outputs the hardware architecture of the current host.</p>
+</div>
+<div id="stdtimestamp" class="section level3 function">
+<h3>std::timestamp</h3>
+<p>outputs the UNIX timestamp</p>
+<div id="environment-variables-6" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>TZ</code></dt>
+<dd>the timezone to use to print the timestamp, by default get the timezone from the system.
+</dd>
+</dl>
+</div>
+</div>
+<div id="stdparse-arg_string" class="section level3">
+<h3>std::parse <code class="function">&lt;arg_string&gt;</code></h3>
+<p>parse an argument string in the form key=value and promote this variables to environment. The key <code>name</code> is mandatory. If the first parameter has no key, key <code>name</code> is using by default.</p>
+<div id="usage-example-10" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">std</span>::parse <span class="st">&quot;name=Jhon age=90&quot;</span>
+<span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">$name</span><span class="st"> has </span><span class="ot">$age</span><span class="st"> years old&quot;</span></code></pre></div>
+</div>
+</div>
+<div id="stdrun-command" class="section level3">
+<h3>std::run <code class="function">&lt;command&gt;</code></h3>
+<p>Run command passed as argument if $PRETEND is not set to true</p>
+<div id="environment-variables-7" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>PRETEND</code></dt>
+<dd>if true do nothing.
+</dd>
+</dl>
+</div>
+</div>
+<div id="stdinstalled-command" class="section level3">
+<h3>std::installed <code class="function">&lt;command&gt;</code></h3>
+<p>return true if command is installed in path</p>
+</div>
+<div id="stdis_dir_empty-dir" class="section level3">
+<h3>std::is_dir_empty <code class="function">&lt;dir&gt;</code></h3>
+<p>return true if dir is empty</p>
+</div>
+<div id="stdsort-array" class="section level3">
+<h3>std::sort <code class="function">&lt;array&gt;</code></h3>
+<p>sort an array using qsort in pure bash (not very efficient) and return the output to an special variable called <code>sort_ret</code>.</p>
+<div id="environment-variables-8" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>sort_ret</code></dt>
+<dd>will contain the sorted array
+</dd>
+</dl>
+</div>
+</div>
+<div id="str2array-string-separator" class="section level3">
+<h3>str2array <code>&lt;string&gt;</code> <code class="function">[separator]</code></h3>
+<p>create a new array with the contents of the string, using separator passed as argument.</p>
+<div id="parameters-17" class="section level4">
+<h4>Parameters</h4>
+<dl>
+<dt><code>string</code></dt>
+<dd>the string to covert to array
+</dd>
+<dt><code>separator</code></dt>
+<dd>the character to use as separator, by default use comma.
+</dd>
+</dl>
+</div>
+<div id="usage-example-11" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">str2array</span> <span class="st">&quot;one,two,three&quot;</span>
+<span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${str2array_ret[@]}</span><span class="st">&quot;</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="term" class="section level2 module">
+<h2>term</h2>
+<p>The <code>term</code> module provides functions related with terminal configuration. This module also define some useful color variables to be used in <code>out</code> module.</p>
+<div id="termattached" class="section level3 function">
+<h3>term::attached</h3>
+<p>return true if output is a terminal, false otherwise</p>
+</div>
+<div id="termtcap-capability" class="section level3">
+<h3>term::tcap <code class="function">&lt;capability&gt;</code></h3>
+<p>check if some capabilty is enabled in terminal</p>
+</div>
+</div>
+<div id="tmp" class="section level2 module">
+<h2>tmp</h2>
+<p>The <code>tmp</code> module provides functions to create and destroy temporary directories. Even if you don’t remove the temporary file or directoy explicitely, the directory or file will be deleted when program exits.</p>
+<div id="environment-variables-9" class="section level4">
+<h4>Environment variables</h4>
+<dl>
+<dt><code>TMPDIR</code></dt>
+<dd>a subdirectory into /tmp to use to create temporary files or directories.
+</dd>
+<dt><code>BLIB_TMPDIR</code></dt>
+<dd>a full path to temporary directory to use to store files or other directories.
+</dd>
+</dl>
+</div>
+<div id="usage-example-12" class="section level4">
+<h4>Usage example</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tmp</span>::create
+<span class="co"># do some actions in current directory, which is temporary one</span>
+<span class="kw">tmp</span>::destroy</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> <span class="ot">$(</span><span class="kw">tmp</span>::file<span class="ot">)</span></code></pre></div>
+</div>
+<div id="tmpcreate-dirname" class="section level3">
+<h3>tmp::create <code class="function">&lt;dirname&gt;</code></h3>
+<p>create temporary directory and move working directory into it</p>
+</div>
+<div id="tmpexit" class="section level3 function">
+<h3>tmp::exit</h3>
+<p>exit the temporary directory, but not remove it.</p>
+</div>
+<div id="tmpdestroy" class="section level3 function">
+<h3>tmp::destroy</h3>
+<p>move to root directoy and remove temporary directory</p>
+</div>
+<div id="tmpexists-name" class="section level3">
+<h3>tmp::exists <code class="function">&lt;name&gt;</code></h3>
+<p>return true if the specified file name or directory name is a temporary file or directory.</p>
+</div>
+<div id="tmpfile" class="section level3 function">
+<h3>tmp::file</h3>
+<p>print to stdout the name of unique temporary file.</p>
+</div>
+<div id="tmptouch-name" class="section level3">
+<h3>tmp::touch <code class="function">&lt;name&gt;</code></h3>
+<p>create a temporary file with specified name in temporary directory.</p>
+<hr />
+</div>
+</div>
+</div>
+</div>
+</body>
+

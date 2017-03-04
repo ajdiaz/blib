@@ -1,0 +1,54 @@
+#! /bin/bash
+# mod: mutex
+# api: blib
+# txt: The `mutex` module provides a way to ensure critical region access
+#      across different processes. NOTE this module does not work fine on some
+#      filesystems, like NFS, AFS and others.
+# use: mutex::run mymutex sleep 10 # run a sleep in a critical region
+#      mutex::adquire mymutex
+#      # do some critical changes
+#      mutex::release mymutex
+
+# fun: mutex::adquire <name>
+# api: blib
+# txt: create a mutex or wait until mutex removed
+# opt: name: the name to identify this mutex
+mutex::adquire () {
+  local i=0
+  tmp::create _mutex
+  while ! std::mute mkdir "_mutex_$1"; do
+    [ $i -eq ${MUTEX_TIMEOUT:-3600} ] && err::trace "Mutex timeout: $1"
+    ${VERBOSE:-false} && out::user "waiting for mutex: $1 ($_run)"
+    std::sleep 1
+    ((i++))
+  done
+  tmp::exit
+  ${VERBOSE:-false} && out::user "adquired mutex: $1 ($_run)"
+}
+
+# fun: mutex::release <name>
+# api: blib
+# txt: release mutex by name
+# opt: name: the name to identify this mutex
+mutex::release () {
+  tmp::create _mutex
+  ${VERBOSE:-false} && out::user "releasing mutex: $1 ($_run)"
+  rmdir "_mutex_${1}"
+  tmp::exit
+}
+
+# fun: mutex::run <name> <command> [args]
+# api: blib
+# txt: run a command protected by mutex named as argument name.
+# opt: name: the name to identify this mutex
+# opt: command: the command to run
+# opt: args: optional arguments to the command.
+mutex::run () {
+  local name="$1"; shift
+  _run="$@"
+  mutex::adquire "$name"
+  "$@"
+  local ret=$?
+  mutex::release "$name"
+  return $ret
+}

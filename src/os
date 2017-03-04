@@ -1,0 +1,50 @@
+#! /bin/bash
+# mod: os
+# api: blib
+# txt: The `os` module provides specified functions to guess the operating
+#      system related variables.
+
+# fun: os::family
+# api: blib
+# txt: print to stdout the operating system family
+os::family () {
+  uname -o
+}
+
+# fun: os::provider
+# api: blib
+# txt: print the operating system provider (formerly distribution).
+os::provider () {
+  for f in ${!os__provider[@]}; do
+    if [ -r "$f" ]; then
+      echo "${os__provider["$f"]}"
+      return 0
+    fi
+  done
+
+  if [ -r /etc/lsb-release ]; then
+    std::mute grep 'DISTRIB_ID=Ubuntu' /etc/lsb-release &&
+      echo ubuntu && return 0
+  fi
+  return 1
+}
+declare -A os__provider
+os__provider["/etc/arch-release"]="archlinux"
+
+# fun: os::release
+# api: blib
+# txt: print to stdout the properly release of operating system provider.
+os::release () {
+  local provider="$(os::provider)"
+  if std::func os::release::${provider}; then
+    std::func::os::release::${provider}
+  fi
+  true
+}
+
+# fun: os::path <file>
+# api: blib
+# txt: return the path of a file in PATH
+# opt: file: the file name to find the full path.
+# env: PATH: contains the path to search file
+os::path () { type -P "$1" 2>/dev/null; }

@@ -1,0 +1,64 @@
+#! /bin/bash
+# mod: tmp
+# api: blib
+# txt: The `tmp` module provides functions to create and destroy temporary
+#      directories. Even if you don't remove the temporary file or directoy
+#      explicitely, the directory or file will be deleted when program
+#      exits.
+# env: TMPDIR: a subdirectory into /tmp to use to create temporary files or
+#      directories.
+# env: BLIB_TMPDIR: a full path to temporary directory to use to store files
+#      or other directories.
+# use: tmp::create
+#      # do some actions in current directory, which is temporary one
+#      tmp::destroy
+# use: echo $(tmp::file)
+
+BLIB_TMPDIR="/tmp/${TMPDIR:-blib}"
+
+__current_tmp=
+# fun: tmp::create <dirname>
+# api: blib
+# txt: create temporary directory and move working directory into it
+tmp::create () {
+  __current_tmp="$PWD"
+  mkdir -p "${BLIB_TMPDIR}/$1" && cd "${BLIB_TMPDIR}/$1"
+  std::add_quit_handler tmp tmp::destroy
+}
+
+# fun: tmp::exit
+# api: blib
+# txt: exit the temporary directory, but not remove it.
+tmp::exit () {
+  cd "${__current_tmp:-/}"
+}
+
+# fun: tmp::destroy
+# api: blib
+# txt: move to root directoy and remove temporary directory
+tmp::destroy () {
+  tmp::exit && rm -rf "${BLIB_TMPDIR}/$1" && unset __current_tmp
+}
+
+# fun: tmp::exists <name>
+# api: blib
+# txt: return true if the specified file name or directory name is
+#      a temporary file or directory.
+tmp::exists () {
+  [ -e "${BLIB_TMPDIR}/$1" ]
+}
+
+# fun: tmp::file
+# api: blib
+# txt: print to stdout the name of unique temporary file.
+tmp::file () {
+  mkdir -p "${BLIB_TMPDIR}" && echo ${BLIB_TMPDIR}/$$-${RANDOM}
+  std::add_quit_handler tmp tmp::destroy
+}
+
+# fun: tmp::touch <name>
+# api: blib
+# txt: create a temporary file with specified name in temporary directory.
+tmp::touch () {
+  mkdir -p "${BLIB_TMPDIR}" && : > "${BLIB_TMPDIR}/$1"
+}

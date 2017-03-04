@@ -1,0 +1,11 @@
+#! /bin/bash
+# mod: os.ubuntu
+# txt: The ``os.ubuntu`` module extends ``os`` module adding specific
+#      functions for Ubuntu based systems.
+
+# fun: os::relase::ubuntu
+# txt: return specific relese for ubuntu operating systems.
+os::release::ubuntu () {
+  IFS='=' read _ release < <(grep "^DISTRIB_RELEASE=" /etc/lsb-release)
+  echo "$release"
+}
