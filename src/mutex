@@ -19,7 +19,7 @@ mutex::adquire () {
   while ! std::mute mkdir "_mutex_$1"; do
     [ $i -eq ${MUTEX_TIMEOUT:-3600} ] && err::trace "Mutex timeout: $1"
     ${VERBOSE:-false} && out::user "waiting for mutex: $1 ($_run)"
-    sleep 1
+    sleep "1.${RANDOM}"
     ((i++))
   done
   tmp::exit
