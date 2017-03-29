@@ -137,7 +137,10 @@ arg::usage::action::explain () {
     local help_str="${arg__param["$key"]}"
     param+="$(printf "  %-20s %s" "${par}" "${help_str}")"
     param+=$'\n'
-    spam+="${spam:+ }<${par}>"
+    case "$par" in
+      *\?|*'*') spam+="${spam:+ }[${par}]";;
+      *) spam+="${spam:+ }<${par}>";;
+    esac
   done
 
   if [ "$1" == "MAIN" ]; then
@@ -241,8 +244,8 @@ arg::parse::arg () {
     IFS=, read a name <<< "${param}"
     if [ "$action" == "$a" ]; then
       case "$name" in
-        +) ((count++));;
-        ?|'*') ;;
+        *+) ((count++));;
+        *\?|*'*') ;;
         *) ((count++));;
       esac
     fi
