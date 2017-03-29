@@ -24,6 +24,6 @@ doc: all
 	$(BASHDOC) -a blib -f README.md -o doc/blib.html blib
 
 clean:
-	rm -f $(OUTBIN)
+	rm -f $(OUTBIN) $(OUTBIN)-*
 # vim:ft=make
 #
