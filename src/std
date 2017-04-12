@@ -8,7 +8,7 @@
 # api: blib
 # txt: perform an exit clean of the running program.
 std::quit () {
-  for handler in ${std__quit_handler[@]}; do
+  for handler in "${std__quit_handler[@]}"; do
     $handler
   done
 }
@@ -43,10 +43,10 @@ trap std::quit CHLD
 std::hmac () {
   ALGO="${ALGO:=sha1}"
   local sum=
-  local path="$(os::path ${ALGO}sum)"
+  local path; path="$(os::path ${ALGO}sum)"
   if [ "$path" ]; then
     sum="$(echo -n "$1" | ${ALGO}sum)"
-    read sum _ <<<"$sum"
+    read -r sum _ <<<"$sum"
     echo "$sum"
   else
     err::trace "Required binary '${ALGO}sum' not found"
@@ -101,6 +101,7 @@ std::arch () {
 # env: TZ: the timezone to use to print the timestamp, by default get the
 #      timezone from the system.
 std::timestamp () {
+  # shellcheck disable=SC2183
   printf "%(%s)T\n"
 }
 
@@ -187,7 +188,6 @@ std::sort () {
 #      echo "${str2array_ret[@]}"
 std::str2array () {
   local str="$1"
-  local sep="${2:-,}"
   # remove [] if present
   str="${str#[}"
   str="${str%]}"
@@ -195,4 +195,4 @@ std::str2array () {
   eval set -- "${str//,/ }"
   str2array_ret=( "$@" )
 }
-declare -a str2array_ret
+declare -xa str2array_ret

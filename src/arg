@@ -21,7 +21,6 @@
 #      arg::parse "$@"
 
 
-declare -A arg__opt_arg
 declare -A arg__opt_long
 declare -A arg__opt_short
 declare -A arg__opt_help
@@ -105,7 +104,7 @@ arg::usage::action::explain () {
   local param=""
 
   for key in "${!arg__opt_help[@]}"; do
-    IFS=',' read action short long <<<"${key}"
+    IFS=',' read -r action short long <<<"${key}"
     [ "$action" != "$1" ] && continue
     local help_str="${arg__opt_help["$key"]}"
 
@@ -119,12 +118,13 @@ arg::usage::action::explain () {
     summ+=" [-${short%:}${argname}]"
 
     if [ "${argname}" ]; then
-      text+="$(printf "  %-20s" "-${short%:}${arg}, --${long%:}${argname}")"
+      text+="$(printf "  %-20s" \
+               "-${short%:}${argname}, --${long%:}${argname}")"
       text+=$'\n'
       text+="$(printf "  %-20s %s" '' "${help_str}")"
     else
       text+="$(printf "  %-20s %s" \
-               "-${short%:}${arg}, --${long%:}" \
+               "-${short%:}${argname}, --${long%:}" \
                "${help_str}")"
     fi
     text+=$'\n'
@@ -132,7 +132,7 @@ arg::usage::action::explain () {
 
   local spam=''
   for key in "${!arg__param[@]}"; do
-    IFS=',' read action par <<<"${key}"
+    IFS=',' read -r action par <<<"${key}"
     [ "$action" != "$1" ] && continue
     local help_str="${arg__param["$key"]}"
     param+="$(printf "  %-20s %s" "${par}" "${help_str}")"
@@ -154,7 +154,7 @@ arg::usage::action::explain () {
       actions+=$'\n'
     done
   fi
-  echo "$summ${sact:+" {$sact}"}${spam:+ $spam}"
+  echo "$summ${sact:+" \{$sact\}"}${spam:+ $spam}"
   echo
 
   [ "$1" == "MAIN" ] && [ "${arg__actions_help["MAIN"]}" ] &&
@@ -173,7 +173,7 @@ arg::usage::action::explain () {
     echo "$text"
   fi
 
-  exit ${E:-0}
+  exit "${E:-0}"
 }
 
 # fun: arg:::main::help <text>
@@ -241,7 +241,7 @@ arg::parse::arg () {
 
   count=0
   for param in "${!arg__param[@]}"; do
-    IFS=, read a name <<< "${param}"
+    IFS=, read -r a name <<< "${param}"
     if [ "$action" == "$a" ]; then
       case "$name" in
         *+) ((count++));;
