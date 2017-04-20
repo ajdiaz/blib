@@ -1,0 +1,24 @@
+#! /bin/bash
+# mod: version
+# api: blib
+# txt: The `version` module provides a number of functions to handle version
+#      numbers.
+
+# fun: version::cmp <version1> <version2>
+# txt: compare two version numbers, return -1 (255) if version1 is greater
+#      than version2, return 1 if version2 is greater than version1 and 0
+#      if both are equal
+version::cmp () {
+  local ver1 rev1 pat1 ver2 rev2 pat2
+  { IFS='.' read -r ver1 rev1 pat1 <<<"$1"; }
+  { IFS='.' read -r ver2 rev2 pat2 <<<"$2"; }
+
+  [[ "$ver1" -gt "$ver2" ]] && return 255
+  [[ "$ver2" -gt "$ver1" ]] && return 1
+  [[ "$rev1" -gt "$rev2" ]] && return 255
+  [[ "$rev2" -gt "$rev1" ]] && return 1
+  [[ "$pat1" -gt "$pat2" ]] && return 255
+  [[ "$pat2" -gt "$pat1" ]] && return 1
+
+  return 0
+}

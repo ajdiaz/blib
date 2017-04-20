@@ -15,16 +15,27 @@ term::attached () { [ -t 1 ] && ! ${BLIB_DISABLE_COLORS:-false}; }
 # txt: check if some capabilty is enabled in terminal
 term::tcap () { tput "$1" 2>/dev/null; }
 
-if term::attached; then
-  case "$(term::tcap colors)" in
-    256)
-      COLOR_NONE=$'\033[0;0;0m'
-      COLOR_INFO=$'\033[38;5;79m'
-      COLOR_WARN=$'\033[38;5;190m'
-      COLOR_FAIL=$'\033[38;5;160m'
-      COLOR_DATE=$'\033[38;5;242m'
-      COLOR_USER=$'\033[38;5;201m'
-      COLOR_BOLD=$'\033[1;15m'
-      ;;
-  esac
-fi
+# fun: term::init
+# api: blib
+# txt: initialize terminal, in theory you never need to call this function,
+#      unless you want to change your terminal online.
+term::init () {
+  if term::attached; then
+    case "$(term::tcap colors)" in
+      256)
+        COLOR_NONE=$'\033[0;0;0m'
+        COLOR_INFO=$'\033[38;5;79m'
+        COLOR_WARN=$'\033[38;5;190m'
+        COLOR_FAIL=$'\033[38;5;160m'
+        COLOR_DATE=$'\033[38;5;242m'
+        COLOR_USER=$'\033[38;5;201m'
+        COLOR_BOLD=$'\033[1;15m'
+        ;;
+    esac
+  else
+    unset COLOR_NONE COLOR_INFO COLOR_WARN COLOR_FAIL
+    unset COLOR_DATE COLOR_USER COLOR_BOLD
+  fi
+}
+
+term::init
