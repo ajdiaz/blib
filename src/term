@@ -8,7 +8,7 @@
 # fun: term::attached
 # api: blib
 # txt: return true if output is a terminal, false otherwise
-term::attached () { [ -t 1 ]; }
+term::attached () { [ -t 1 ] && ! ${BLIB_DISABLE_COLORS:-false}; }
 
 # fun: term::tcap <capability>
 # api: blib
