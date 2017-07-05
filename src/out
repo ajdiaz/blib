@@ -35,7 +35,7 @@ out::info () { out::log "$1" "${COLOR_INFO}info${COLOR_NONE}"; }
 # env: COLOR_FAIL: defines the color to be used in this kind of messages.
 #      E: if set exit program with error code defined in the variable
 out::fail () {
-  out::log "$1" "${COLOR_FAIL}fail${COLOR_NONE}" >&2;
+  out::log "$1" "${COLOR_FAIL}fail${COLOR_NONE}" >&4;
   ${E:+exit $E}
 }
 
@@ -43,10 +43,27 @@ out::fail () {
 # txt: print an informational message in stdout.
 # txt: print a warning message in stderr.
 # env: COLOR_WARN: defines the color to be used in this kind of messages.
-out::warn () { out::log "$1" "${COLOR_WARN}warn${COLOR_NONE}" >&2; }
+out::warn () { out::log "$1" "${COLOR_WARN}warn${COLOR_NONE}" >&4; }
 
 # fun: out::user <message>
 # txt: print an informational message in stdout.
 # txt: print a user defined message in stdout
 # env: COLOR_USER: defines the color to be used in this kind of messages.
 out::user () { out::log "$1" "${COLOR_USER}user${COLOR_NONE}"; }
+
+# This code catch all messages in stderr and prefixed with out::fail,
+# cloning &2 to &4 and redirecting all &2 messages to &4
+
+if ${DEBUG:-false}; then
+  exec 4>&2
+else
+  exec 4>&2
+  coproc err_handler ( read -r line; out::fail "$line";)
+  export OUT__STDERR__PID="$!"
+  eval "exec 2>&${err_handler[1]}"
+fi
+
+out::_close_fd ()
+{
+  kill "${OUT__STDERR__PID}"
+}

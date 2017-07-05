@@ -24,6 +24,7 @@ std::quit () {
 #      std::add_quit_handler somefunc
 declare -A std__quit_handler
 std__quit_handler["tmp"]="tmp::destroy"
+std__quit_handler["out"]="out::_close_fd"
 std::add_quit_handler () {
   std__quit_handler["$1"]="$2"
 }
