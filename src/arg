@@ -4,8 +4,8 @@
 # txt: The `arg` module provides a number of functions to parse arguments
 #      from command line.
 #
-#      To use `arg` module you need to create handler functions which will
-#      be call during the parser process. The handler functions sould return
+#      To use the `arg` module you need to create handler functions which will
+#      be called during the parser process. The handler functions should return
 #      the number of parameters comsumed from the parameter list. See
 #      example below for more information.
 # use: opt_quiet () {
