@@ -51,7 +51,7 @@ out::warn () { out::log "$1" "${COLOR_WARN}warn${COLOR_NONE}" >&4; }
 # env: COLOR_USER: defines the color to be used in this kind of messages.
 out::user () { out::log "$1" "${COLOR_USER}user${COLOR_NONE}"; }
 
-# This code catch all messages in stderr and prefixed with out::fail,
+# This code catches all messages in stderr and prefixes them with out::fail,
 # cloning &2 to &4 and redirecting all &2 messages to &4
 
 if ${DEBUG:-false}; then
