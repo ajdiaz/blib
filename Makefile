@@ -20,7 +20,7 @@ all:
 	@ls -l $(OUTBIN)
 
 doc: all
-	$(BASHDOC) -a blib -f README.md -o doc/blib.html blib
+	$(BASHDOC) -T blib -a blib -f README.md -o doc/blib.html blib
 
 clean:
 	rm -f $(OUTBIN) $(OUTBIN)-*
