@@ -58,6 +58,7 @@ if ${DEBUG:-false}; then
   exec 4>&2
 else
   exec 4>&2
+  unset err_handler
   coproc err_handler ( read -r line; out::fail "$line";)
   export OUT__STDERR__PID="$!"
   eval "exec 2>&${err_handler[1]}"

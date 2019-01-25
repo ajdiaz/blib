@@ -18,7 +18,6 @@ all:
 	done <$(REQUIREMENTS)
 	@chmod 755 $(OUTBIN)
 	@ls -l $(OUTBIN)
-	@cp $(OUTBIN) $(OUTBIN)-$(shell git describe --tags)
 
 doc: all
 	$(BASHDOC) -a blib -f README.md -o doc/blib.html blib

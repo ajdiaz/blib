@@ -29,7 +29,6 @@ std::add_quit_handler () {
   std__quit_handler["$1"]="$2"
 }
 trap std::quit EXIT
-trap std::quit CHLD
 
 # fun: std::hmac <text>
 # api: blib
