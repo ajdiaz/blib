@@ -11,7 +11,7 @@
 err::trace () {
   echo "${COLOR_FAIL}Traceback (most recent call last):${COLOR_NONE}" >&4
   for ((i=0;; i++)); do
-    read -r line fun file < <(caller $i)
+    read -r line fun file < <(caller "$i")
     if [ "$line" ]; then
       echo "${COLOR_FAIL} File '$file', line $line, in $fun${COLOR_NONE}" >&4
     else
