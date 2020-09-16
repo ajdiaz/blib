@@ -3,4 +3,4 @@ sources:
   - https://git.sr.ht/~ajdiaz/blib
 tasks:
   - build: |
-      make
+      make -C blib
