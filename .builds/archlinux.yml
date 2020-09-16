@@ -1,0 +1,6 @@
+image: archlinux
+sources:
+  - https://git.sr.ht/~ajdiaz/blib
+tasks:
+  - build: |
+      make
