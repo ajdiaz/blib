@@ -72,13 +72,10 @@ std::strin () {
   [[ "${1//$2/}" != "${1}" ]]
 }
 
-# fun: std::sleep <seconds>
-# api: blib
-# txt: sleep for specified number of seconds. This function is pure-bash, so
-#      not need sleep(1) command.
-std::sleep () {
-  read -N 0 -t "$1" -s -r </dev/tty 3<&- 3<&0 <&3
-}
+
+if [[ -z "${BLIB_USE_SLEEP_COMMAND}" ]] && [[ -e /usr/lib/bash/sleep ]]; then
+  enable -f /usr/lib/bash/sleep sleep
+fi
 
 # fun: std::func <func_name>
 # api: blib

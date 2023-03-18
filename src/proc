@@ -1,0 +1,21 @@
+#! /bin/bash
+# mod: proc
+# api: blib
+# txt: The `proc` module provides a number of functions to manage parallel
+#      processes
+
+if [[ -z "$BLIB_NPROC" ]]; then
+  type nproc >/dev/null 2>/dev/null && BLIB_NPROC="$(nproc)" || BLIB_NPROC=2
+fi
+
+# fun: proc::waitn [number]
+# api: blib
+# txt: wait for n procs to finished, or for everyone if no number specify
+# opt: number: the number of proccess to wait for or none if wait for everyone.
+proc::waitn () {
+  if [[ "$1" ]]; then
+    (( (++proc__count % ${BLIB_PROC:-2}) == 0 )) && wait
+  else
+    wait
+  fi
+}
